@@ -1,4 +1,6 @@
-import { useState } from "react";
+import {  useState } from "react";
+import usePasswordGenerator from "./hooks/usePasswordGenerator";
+import StrengthChecker from "./components/StrengthChecker";
 
 function App() {
   
@@ -10,21 +12,31 @@ function App() {
     {title:"Include Symbols", state: false}
   ]);
   
+  const [copied, setCopied] = useState(false);
+
   const handleCheckBoxChange = (index) => {
          const updatedCheckboxData = [...checkboxData];
          updatedCheckboxData[index].state = !updatedCheckboxData[index].state;
          setCheckboxData(updatedCheckboxData);
   }
+   
+  const handleCopy = () => {
+    navigator.clipboard.writeText(password);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  }
 
-  
+  const {password,errorMessage,generatePassword} = usePasswordGenerator();
   return (
     <div className="container">
-      <div className="header">
-        <div className="title">jry8762$#</div>
-        <button className="copyBtn" onClick={() => {}}>
-          copy
+      {password &&<div className="header">
+        <div className="title">{password}</div>
+        <button className="copyBtn" onClick={handleCopy}>
+          {copied ? "Copied" : "copy"}
         </button>
-      </div>
+      </div>}
 
       <div className="charlength">
         <span>
@@ -44,10 +56,12 @@ function App() {
         ))}
       </div>
       {/*strength*/}
+      <StrengthChecker password={password} />
+      {/* Error message display */}
+      {errorMessage && <div className="error">{errorMessage}</div>}
 
-      <button className="generateBtn" onClick={()=>{
 
-      }}>Generate Password</button>
+      <button className="generateBtn" onClick={()=>generatePassword(checkboxData,length)}>Generate Password</button>
     </div>
   );
 }
