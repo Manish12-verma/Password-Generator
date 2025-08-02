@@ -20,8 +20,7 @@ A modern, secure password generator built with React and Vite. Generate strong, 
 [View Live Demo](https://password-generator-six-zeta-98.vercel.app/) *(Add your deployment link here)*
 
 ##  Screenshots
-
-*(Add screenshots of your application here)*
+![Screenshot](./public/Screenshot%202025-08-02%20202754.png)
 
 ##  Technologies Used
 
